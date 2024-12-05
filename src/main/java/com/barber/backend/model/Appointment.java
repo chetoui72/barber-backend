@@ -13,11 +13,11 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String customerName;
+    @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime appointmentTime;
     private String serviceType;
-    private String status;  // booked, completed, cancelled
+    private String status;
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }

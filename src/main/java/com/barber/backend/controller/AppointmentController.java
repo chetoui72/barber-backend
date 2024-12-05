@@ -1,8 +1,11 @@
 package com.barber.backend.controller;
 
+
+
 import com.barber.backend.model.Appointment;
 import com.barber.backend.service.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,8 +35,13 @@ public class AppointmentController {
 
     @PostMapping
     public ResponseEntity<?> createAppointment(@RequestBody Appointment appointment) {
-        Appointment createdAppointment = appointmentService.createAppointment(appointment);
-        return ResponseEntity.ok(createdAppointment);
+        try {
+            Appointment createdAppointment = appointmentService.createAppointment(appointment);
+            return ResponseEntity.ok(createdAppointment);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error creating appointment: " + e.getMessage());
+        }
     }
 
     @PutMapping("/{id}")
